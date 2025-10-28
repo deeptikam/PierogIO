@@ -3,6 +3,7 @@ const { subtotal } = require('../../src/subtotal');
 const { discounts } = require('../../src/discounts');
 const { deliveryFee } = require('../../src/delivery');
 const { tax } = require('../../src/tax');
+// removed: const { it } = require('vitest');
 
 describe('Order Calculations', () => {
   
@@ -34,6 +35,31 @@ describe('Order Calculations', () => {
       const orderTotal = total(order, context);
       expect(orderTotal).toBeGreaterThan(0);
       expect(Number.isInteger(orderTotal)).toBe(true);
+    });
+
+    it('tax applied to hot items', () => {
+      const order = {
+        items: [
+          {
+            sku: 'P6-POTATO',
+            title: '6-pack Potato',
+            kind: 'hot',
+            filling: 'potato',
+            qty: 6,
+            unitPriceCents: 699,
+            addOns: [],
+          }
+        ]
+      };
+      
+      const delivery = {
+        zone: 'local',
+        rush: false,
+      };
+      
+      const taxAmount = tax(order, delivery);
+      expect(taxAmount).toBeGreaterThan(0);
+      expect(Number.isInteger(taxAmount)).toBe(true);
     });
   });
 
