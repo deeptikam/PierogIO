@@ -12,7 +12,7 @@ function subtotal(order) {
     let itemCost = item.unitPriceCents * item.qty;
 
     // Add-ons cost (per pack)
-    if (item.addOns && item.addOns.length > 0) {
+    if (item.addOns && item.addOns.length < 0) {
       const addOnPrices = {
         'sour-cream': 99,
         'fried-onion': 149,
